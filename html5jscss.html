@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Add any additional custom styles here */
+        .line-through { text-decoration: line-through; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100 py-8">
+    <div class="max-w-2xl mx-auto bg-white shadow-lg relative">
+        <!-- Hamburger Menu Overlay -->
+        <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+        <!-- Side Menu -->
+        <div id="side-menu" class="fixed top-0 left-0 h-full w-64 bg-white transform transition-transform duration-300 ease-in-out z-50 -translate-x-full">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200">
+                <span class="font-bold text-xl">Menu</span>
+                <button id="close-menu" class="text-gray-500 hover:text-red-600">
+                    X
+                </button>
+            </div>
+            <div class="py-2">
+                <button class="flex items-center w-full p-4 hover:bg-gray-100 text-gray-700">
+                    Home
+                </button>
+                <button class="flex items-center w-full p-4 hover:bg-gray-100 text-gray-700">
+                    Settings
+                </button>
+                <button class="flex items-center w-full p-4 hover:bg-gray-100 text-gray-700">
+                    Profile
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="p-6">
+            <!-- Header with Hamburger -->
+            <div class="flex items-center mb-4">
+                <button id="open-menu" class="p-2 hover:bg-gray-100 rounded mr-4">
+                    ☰
+                </button>
+                <div class="flex-1 border-b-4 border-red-600">
+                    <h1 class="text-3xl font-bold mb-2">TODAY'S TASKS</h1>
+                    <div id="current-date" class="text-gray-500 text-sm mb-4"></div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex gap-4 mb-6 text-sm">
+                <button id="filter-active" class="text-red-600 font-bold">Active</button>
+                <button id="filter-completed" class="text-gray-600">Completed</button>
+                <button id="filter-all" class="text-gray-600">All</button>
+            </div>
+
+            <!-- Todo List -->
+            <div id="todo-list" class="space-y-3 mb-6">
+                <!-- Todo items will be dynamically added here -->
+            </div>
+
+            <!-- Add Todo Section -->
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <div class="flex gap-2">
+                    <input id="new-todo" type="text" placeholder="Add a new task" class="flex-1 p-2 border border-gray-300 rounded">
+                    <button id="add-todo" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 flex items-center gap-2">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

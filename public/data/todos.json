@@ -1,0 +1,102 @@
+{
+  "todos": [
+    {
+      "id": "1731631604550",
+      "text": "3D Seal shower w sealer",
+      "completed": true,
+      "time": "2024-11-15T00:46:44.550Z",
+      "order": 0
+    },
+    {
+      "id": "1731631712306",
+      "text": "Fix skirting on 19",
+      "completed": false,
+      "time": "2024-11-15T00:48:32.306Z",
+      "order": 1
+    },
+    {
+      "id": "1731631661450",
+      "text": "Fix lot 15 AC leak",
+      "completed": true,
+      "time": "2024-11-15T00:47:41.450Z",
+      "order": 2
+    },
+    {
+      "id": "1731630481036",
+      "text": "Cut Tongue off 17",
+      "completed": true,
+      "time": "2024-11-15T00:28:01.036Z",
+      "order": 3
+    },
+    {
+      "id": "1731630489396",
+      "text": "Cut Tongue off 19",
+      "completed": true,
+      "time": "2024-11-15T00:28:09.396Z",
+      "order": 4
+    },
+    {
+      "id": "1731631684410",
+      "text": "Fix insulation on 19",
+      "completed": false,
+      "time": "2024-11-15T00:48:04.410Z",
+      "order": 5
+    },
+    {
+      "id": "1731631731490",
+      "text": "Install 220V in 3D",
+      "completed": false,
+      "time": "2024-11-15T00:48:51.490Z",
+      "order": 6
+    },
+    {
+      "id": "1731631749026",
+      "text": "Fix lights in 3 basement so wiring is covered",
+      "completed": false,
+      "time": "2024-11-15T00:49:09.026Z",
+      "order": 7
+    },
+    {
+      "id": "1731631672114",
+      "text": "Fix garbage disposal lot 12",
+      "completed": true,
+      "time": "2024-11-15T00:47:52.114Z",
+      "order": 8
+    },
+    {
+      "id": "1731631830849",
+      "text": "Finish touch up paint outside 7 - trim around doors etc",
+      "completed": false,
+      "time": "2024-11-15T00:50:30.849Z",
+      "order": 9
+    },
+    {
+      "id": "1731632122656",
+      "text": "Clean up ground outside 3D",
+      "completed": false,
+      "time": "2024-11-15T00:55:22.656Z",
+      "order": 10
+    },
+    {
+      "id": "1731631768812",
+      "text": "Add timeout switch to 3 basement so lights turn of automatically",
+      "completed": false,
+      "time": "2024-11-15T00:49:28.812Z",
+      "order": 11
+    },
+    {
+      "id": "1731631873889",
+      "text": "Install 15 water meters start with 18 if occupied. Otherwise start with mobile homes.",
+      "completed": false,
+      "time": "2024-11-15T00:51:13.889Z",
+      "order": 12
+    },
+    {
+      "id": "1731631798667",
+      "text": "Fix 17 water leak by AC / Remove AC and prep for minisplit",
+      "completed": false,
+      "time": "2024-11-15T00:49:58.667Z",
+      "order": 13
+    }
+  ]
+} 

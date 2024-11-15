@@ -1,0 +1,118 @@
+{
+    "todos": [
+        {
+            "id": "1731630481036",
+            "text": "Cut Tongue off 17",
+            "completed": true,
+            "time": "2024-11-15T00:28:01.036Z"
+        },
+        {
+            "id": "1731631712306",
+            "text": "Fix skirting on 19",
+            "completed": false,
+            "time": "2024-11-15T00:48:32.306Z"
+        },
+        {
+            "id": "1731631604550",
+            "text": "3D Seal shower w sealer",
+            "completed": true,
+            "time": "2024-11-15T00:46:44.550Z"
+        },
+        {
+            "id": "1731631684410",
+            "text": "Fix insulation on 19",
+            "completed": false,
+            "time": "2024-11-15T00:48:04.410Z"
+        },
+        {
+            "id": "1731630489396",
+            "text": "Cut Tongue off 19",
+            "completed": true,
+            "time": "2024-11-15T00:28:09.396Z"
+        },
+        {
+            "id": "1731631731490",
+            "text": "Install 220V in 3D",
+            "completed": false,
+            "time": "2024-11-15T00:48:51.490Z"
+        },
+        {
+            "id": "1731631749026",
+            "text": "Fix lights in 3 basement so wiring is covered",
+            "completed": false,
+            "time": "2024-11-15T00:49:09.026Z"
+        },
+        {
+            "id": "1731631661450",
+            "text": "Fix lot 15 AC leak",
+            "completed": true,
+            "time": "2024-11-15T00:47:41.450Z"
+        },
+        {
+            "id": "1731631672114",
+            "text": "Fix garbage disposal lot 12",
+            "completed": true,
+            "time": "2024-11-15T00:47:52.114Z"
+        },
+        {
+            "id": "1731631768812",
+            "text": "Add timeout switch to 3 basement so lights turn of automatically",
+            "completed": false,
+            "time": "2024-11-15T00:49:28.812Z"
+        },
+        {
+            "id": "1731631830849",
+            "text": "Finish touch up paint outside 7 - trim around doors etc",
+            "completed": false,
+            "time": "2024-11-15T00:50:30.849Z"
+        },
+        {
+            "id": "1731632122656",
+            "text": "Clean up ground outside 3D",
+            "completed": false,
+            "time": "2024-11-15T00:55:22.656Z"
+        },
+        {
+            "id": "1731631873889",
+            "text": "Install 15 water meters start with 18 if occupied. Otherwise start with mobile homes.",
+            "completed": false,
+            "time": "2024-11-15T00:51:13.889Z"
+        },
+        {
+            "id": "1731631798667",
+            "text": "Fix 17 water leak by AC / Remove AC and prep for minisplit",
+            "completed": false,
+            "time": "2024-11-15T00:49:58.667Z"
+        },
+        {
+            "id": "1731632248111",
+            "text": "1",
+            "completed": false,
+            "time": "2024-11-15T00:57:28.111Z"
+        },
+        {
+            "id": "1731632250927",
+            "text": "2",
+            "completed": false,
+            "time": "2024-11-15T00:57:30.927Z"
+        },
+        {
+            "id": "1731632253335",
+            "text": "3",
+            "completed": false,
+            "time": "2024-11-15T00:57:33.335Z"
+        },
+        {
+            "id": "1731632256679",
+            "text": "4",
+            "completed": false,
+            "time": "2024-11-15T00:57:36.679Z"
+        },
+        {
+            "id": "1731632258431",
+            "text": "5",
+            "completed": false,
+            "time": "2024-11-15T00:57:38.431Z"
+        }
+    ]
+}
