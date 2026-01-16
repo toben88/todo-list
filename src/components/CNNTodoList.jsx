@@ -7,6 +7,10 @@ const API_URL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8000/data/todos.php'
   : './data/todos.php';
 
+const SETTINGS_URL = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:8000/data/settings.php'
+  : './data/settings.php';
+
 // Available accent colors
 const ACCENT_COLORS = [
   { name: 'Blue', value: '#2563EB' },
@@ -25,16 +29,56 @@ const CNNTodoList = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [dragEnabled, setDragEnabled] = useState(true); // Add state to control drag functionality
-  const [accentColor, setAccentColor] = useState(() => {
-    return localStorage.getItem('accentColor') || '#2563EB';
-  });
+  const [dragEnabled, setDragEnabled] = useState(true);
+  const [accentColor, setAccentColor] = useState('#2563EB');
+  const [pageTitle, setPageTitle] = useState("TODAY'S TASKS");
   const [showSettings, setShowSettings] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const [editingTodoId, setEditingTodoId] = useState(null);
+  const [editingText, setEditingText] = useState('');
 
-  // Save accent color to localStorage when it changes
+  // Load settings from server
   useEffect(() => {
-    localStorage.setItem('accentColor', accentColor);
-  }, [accentColor]);
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch(SETTINGS_URL);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.accentColor) setAccentColor(data.accentColor);
+          if (data.title) setPageTitle(data.title);
+        }
+      } catch (error) {
+        console.error('Error loading settings:', error);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  // Save settings to server
+  const saveSettings = async (newSettings) => {
+    try {
+      const response = await fetch(SETTINGS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newSettings),
+      });
+      if (!response.ok) throw new Error('Failed to save settings');
+    } catch (error) {
+      console.error('Error saving settings:', error);
+    }
+  };
+
+  // Handle accent color change
+  const handleAccentColorChange = (color) => {
+    setAccentColor(color);
+    saveSettings({ accentColor: color, title: pageTitle });
+  };
+
+  // Handle title change
+  const handleTitleChange = (newTitle) => {
+    setPageTitle(newTitle);
+    saveSettings({ accentColor, title: newTitle });
+  };
 
   // Add current date
   const currentDate = new Date().toLocaleDateString('en-US', {
@@ -205,6 +249,41 @@ const CNNTodoList = () => {
 
   const handleSettingsClick = () => {
     setShowSettings(true);
+    setShowProfile(false);
+  };
+
+  const handleProfileClick = () => {
+    setShowProfile(true);
+    setShowSettings(false);
+  };
+
+  // Handle double-click to edit todo
+  const handleTodoDoubleClick = (todo) => {
+    setEditingTodoId(todo.id);
+    setEditingText(todo.text);
+  };
+
+  // Save edited todo
+  const handleEditSave = async (id) => {
+    if (!editingText.trim()) return;
+    const updatedTodos = todos.map(todo =>
+      todo.id === id ? { ...todo, text: editingText.trim() } : todo
+    );
+    setTodos(updatedTodos);
+    await saveTodos(updatedTodos);
+    setEditingTodoId(null);
+    setEditingText('');
+  };
+
+  // Handle edit key press (Enter to save, Escape to cancel)
+  const handleEditKeyPress = (e, id) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleEditSave(id);
+    } else if (e.key === 'Escape') {
+      setEditingTodoId(null);
+      setEditingText('');
+    }
   };
 
   if (isLoading) {
@@ -229,8 +308,8 @@ const CNNTodoList = () => {
       {/* Side Menu */}
       <div className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex justify-between items-center p-4 border-b border-gray-200">
-          <span className="font-bold text-xl">{showSettings ? 'Settings' : 'Menu'}</span>
-          <button onClick={() => { setIsMenuOpen(false); setShowSettings(false); }} className="text-gray-500 hover:text-blue-600">
+          <span className="font-bold text-xl">{showSettings ? 'Settings' : showProfile ? 'Profile' : 'Menu'}</span>
+          <button onClick={() => { setIsMenuOpen(false); setShowSettings(false); setShowProfile(false); }} className="text-gray-500 hover:text-blue-600">
             <X size={24} />
           </button>
         </div>
@@ -250,7 +329,7 @@ const CNNTodoList = () => {
                   {ACCENT_COLORS.map((color) => (
                     <button
                       key={color.value}
-                      onClick={() => setAccentColor(color.value)}
+                      onClick={() => handleAccentColorChange(color.value)}
                       className={`w-10 h-10 rounded-full border-2 ${accentColor === color.value ? 'border-gray-800 scale-110' : 'border-transparent'}`}
                       style={{ backgroundColor: color.value }}
                       title={color.name}
@@ -259,11 +338,39 @@ const CNNTodoList = () => {
                 </div>
               </div>
             </div>
+          ) : showProfile ? (
+            <div className="p-4">
+              <button
+                onClick={() => setShowProfile(false)}
+                className="flex items-center gap-2 text-gray-600 mb-4 hover:text-gray-800"
+              >
+                <ChevronRight size={16} className="rotate-180" />
+                Back
+              </button>
+              <div className="mb-4">
+                <h3 className="font-semibold mb-3">Page Title</h3>
+                <input
+                  type="text"
+                  value={pageTitle}
+                  onChange={(e) => setPageTitle(e.target.value)}
+                  onBlur={() => handleTitleChange(pageTitle)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      handleTitleChange(pageTitle);
+                      e.target.blur();
+                    }
+                  }}
+                  className="w-full p-2 border border-gray-300 rounded"
+                  placeholder="Enter page title"
+                />
+                <p className="text-xs text-gray-500 mt-2">Press Enter or click away to save</p>
+              </div>
+            </div>
           ) : (
             <>
               <MenuItem icon={<Home size={20} />} text="Home" />
               <MenuItem icon={<Settings size={20} />} text="Settings" onClick={handleSettingsClick} />
-              <MenuItem icon={<User size={20} />} text="Profile" />
+              <MenuItem icon={<User size={20} />} text="Profile" onClick={handleProfileClick} />
             </>
           )}
         </div>
@@ -276,7 +383,7 @@ const CNNTodoList = () => {
             ☰
           </button>
           <div className="flex-1 border-b-4" style={{ borderColor: accentColor }}>
-            <h1 className="text-3xl font-bold mb-2">TODAY'S TASKS</h1>
+            <h1 className="text-3xl font-bold mb-2">{pageTitle}</h1>
             <div className="text-gray-500 text-sm mb-4">{currentDate}</div>
           </div>
         </div>
@@ -338,7 +445,7 @@ const CNNTodoList = () => {
                               snapshot.isDragging ? 'shadow-lg' : ''
                             }`}
                           >
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-4 flex-1">
                               <div className="cursor-grab text-gray-400">
                                 <GripVertical size={18} />
                               </div>
@@ -348,9 +455,25 @@ const CNNTodoList = () => {
                                 onChange={() => toggleTodo(todo.id)}
                                 className="w-5 h-5 border-2 border-gray-300 rounded"
                               />
-                              <span className={`${todo.completed ? 'line-through text-gray-500' : ''}`}>
-                                {todo.text}
-                              </span>
+                              {editingTodoId === todo.id ? (
+                                <input
+                                  type="text"
+                                  value={editingText}
+                                  onChange={(e) => setEditingText(e.target.value)}
+                                  onKeyDown={(e) => handleEditKeyPress(e, todo.id)}
+                                  onBlur={() => handleEditSave(todo.id)}
+                                  className="flex-1 p-1 border border-gray-300 rounded"
+                                  autoFocus
+                                />
+                              ) : (
+                                <span
+                                  className={`${todo.completed ? 'line-through text-gray-500' : ''} cursor-pointer`}
+                                  onDoubleClick={() => handleTodoDoubleClick(todo)}
+                                  title="Double-click to edit"
+                                >
+                                  {todo.text}
+                                </span>
+                              )}
                             </div>
                             <div className="flex items-center gap-4">
                               <span className="text-xs text-gray-500">

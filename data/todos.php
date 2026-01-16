@@ -4,33 +4,7 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// Define file path and check permissions
 $todosFile = __DIR__ . '/todos.json';
-if (!is_writable(dirname($todosFile))) {
-    error_log("Directory not writable: " . dirname($todosFile));
-    http_response_code(500);
-    echo json_encode(['error' => 'Server configuration error']);
-    exit;
-}
-
-// Add additional permission check and logging for the file
-if (file_exists($todosFile) && !is_writable($todosFile)) {
-    error_log("File exists but is not writable: " . $todosFile);
-    http_response_code(500);
-    echo json_encode(['error' => 'File permission error']);
-    exit;
-}
-
-// Log file permissions for debugging
-error_log("Directory permissions: " . substr(sprintf('%o', fileperms(dirname($todosFile))), -4));
-if (file_exists($todosFile)) {
-    error_log("File permissions: " . substr(sprintf('%o', fileperms($todosFile)), -4));
-}
-
-// Add error logging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('error_log', __DIR__ . '/debug.log');
 
 // Handle OPTIONS preflight request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
