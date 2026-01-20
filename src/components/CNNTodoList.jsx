@@ -378,7 +378,22 @@ const CNNTodoList = () => {
                       title={color.name}
                     />
                   ))}
+                  <label
+                    className={`w-10 h-10 rounded-full border-2 cursor-pointer flex items-center justify-center ${!ACCENT_COLORS.some(c => c.value === accentColor) ? 'border-gray-800 scale-110' : 'border-gray-300'}`}
+                    style={{ background: 'conic-gradient(red, yellow, lime, aqua, blue, magenta, red)' }}
+                    title="Custom color"
+                  >
+                    <input
+                      type="color"
+                      value={accentColor}
+                      onChange={(e) => handleAccentColorChange(e.target.value)}
+                      className="sr-only"
+                    />
+                  </label>
                 </div>
+                {!ACCENT_COLORS.some(c => c.value === accentColor) && (
+                  <p className="text-xs text-gray-500 mt-2">Custom: {accentColor}</p>
+                )}
               </div>
             </div>
           ) : showProfile ? (
