@@ -19,7 +19,7 @@
     "start": "react-scripts start",
     "server": "node server.js",
     "dev": "concurrently \"npm run server\" \"npm run start\"",
-    "build": "react-scripts build && powershell -Command \"Copy-Item -Path './data/todos.php' -Destination './build/data/' -Force; Copy-Item -Path './data/settings.php' -Destination './build/data/' -Force; Copy-Item -Path './data/install.php' -Destination './build/' -Force -ErrorAction SilentlyContinue\"",
+    "build": "react-scripts build && powershell -Command \"Copy-Item -Path './data/todos.php' -Destination './build/data/' -Force; Copy-Item -Path './data/settings.php' -Destination './build/data/' -Force; Copy-Item -Path './data/visitors.php' -Destination './build/data/' -Force; Copy-Item -Path './data/install.php' -Destination './build/' -Force; Copy-Item -Path './stats.php' -Destination './build/' -Force -ErrorAction SilentlyContinue\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

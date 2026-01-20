@@ -11,6 +11,10 @@ const SETTINGS_URL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8000/data/settings.php'
   : './data/settings.php';
 
+const VISITORS_URL = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:8000/data/visitors.php'
+  : './data/visitors.php';
+
 // Available accent colors
 const ACCENT_COLORS = [
   { name: 'Blue', value: '#2563EB' },
@@ -52,6 +56,45 @@ const CNNTodoList = () => {
       }
     };
     fetchSettings();
+  }, []);
+
+  // Log visitor on page load
+  useEffect(() => {
+    const logVisitor = async () => {
+      try {
+        // Get or create visitor ID from localStorage
+        let visitorId = localStorage.getItem('visitorId');
+
+        const visitorData = {
+          visitorId: visitorId, // null if first visit, server will handle
+          screenWidth: window.screen.width,
+          screenHeight: window.screen.height,
+          viewportWidth: window.innerWidth,
+          viewportHeight: window.innerHeight,
+          pixelRatio: window.devicePixelRatio,
+          language: navigator.language,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          platform: navigator.platform,
+          touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+          connectionType: navigator.connection?.effectiveType || null,
+        };
+
+        const response = await fetch(VISITORS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(visitorData),
+        });
+
+        // Server returns the visitor ID (existing or new)
+        const result = await response.json();
+        if (result.visitorId && result.visitorId !== visitorId) {
+          localStorage.setItem('visitorId', result.visitorId);
+        }
+      } catch (error) {
+        console.error('Error logging visitor:', error);
+      }
+    };
+    logVisitor();
   }, []);
 
   // Save settings to server
